@@ -28,7 +28,26 @@
       font-family: sans-serif;
       color: #bbb;
     }
+    small {
+      display: block;
+      margin: 0 0 5px;
+    }
+    @media(max-width: 568px) {
+      #bookmarklet {
+        display: none;
+      }
+    }
   </style>
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42883729-1', 'denoise.me');
+  ga('send', 'pageview');
+
+</script>
 </head>
 <body>
   
@@ -39,6 +58,11 @@
   <div>
   <footer>
     <small>created by <a href="https://twitter.com/besublime">@BeSublime</a> | fork me on <a href="https://github.com/BeSublime/denoise.me">github</a></small>
+    <small id="bookmarklet">have some extra room in your bookmarks bar? drag this up there for easy access: 
+      <a href="javascript:(function()%7Bvar%20d=document,w=window,l=w.location,enc=encodeURIComponent,f='http://denoise.me/',p='?u='+enc(l.href),u=f+p;try%7Bthrow('Uh%20oh!%20Something%20broke.');%7Dcatch(z)%7Ba=function()%7Bif(!w.open(u))l.href=u;%7D;if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else%20a();%7Dvoid(0);%7D)()" class="bookmarklet" onclick="alert('Drag me to your toolbar first, then click me when you find a video you\'d like to denoise!');return false;">
+        denoise.me
+      </a>
+    </small>
   </footer>
   <script src="js/lib/sprintf.min.js"></script>
   <script>
@@ -52,7 +76,7 @@
             src, vid, host;  // don't knock my variable names, you're smart enough to figure out the difference
 
         // convert the query string to an object
-        window.location.search.replace(/([^?=&]+)(=([^&\?]*))?/g, function ($0, $1, $2, $3) {
+        decodeURIComponent(window.location.search).replace(/([^?=&]+)(=([^&\?]*))?/g, function ($0, $1, $2, $3) {
           queryString[$1] = $3;
         });
 
@@ -125,16 +149,6 @@
         iframe.src = src;
       }
     })();
-  </script>
-
-  <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-42883729-1', 'denoise.me');
-    ga('send', 'pageview');
   </script>
 </body>
 </html>

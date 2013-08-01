@@ -60,14 +60,13 @@
   </footer>
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-  <script src="js/lib/sprintf.min.js"></script>
   <script>
     (function() {
       if (true) {
         var queryString = {},
             iframe = document.getElementById('iframe'),
-            vimeoUrl = 'http://player.vimeo.com/video/%1$s',
-            youtubeUrl = 'http://www.youtube.com/embed/%1$s',
+            vimeoUrl = 'http://player.vimeo.com/video/',
+            youtubeUrl = 'http://www.youtube.com/embed/',
             hash = '#',
             src, vid, host;  // don't knock my variable names, you're smart enough to figure out the difference
 
@@ -128,20 +127,22 @@
             break;
         }
 
-        // append additional query string parameters
+        src = src + vid;
+
+        // append additional query string and/or hash string parameters
         var i = 0;
         for (var p in queryString) {
           if (!p.match(/^[vut]$/)) {
             src = i == 0 ? src + "?" : src + "&";
-            src = src + sprintf("%1$s=%2$s", p, queryString[p]);
+            src = src + p + '=' + queryString[p];
             i++;
           }
         }
 
-        // PUSH the little red button
-        src = sprintf(src, vid);
         if (hash.length > 1)
           src += hash;
+
+        // PUSH the little red button (and you may want to put on a seat belt)
         iframe.src = src;
       }
     })();

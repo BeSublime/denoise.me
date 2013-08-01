@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>denoise.me &middot; distraction-free media viewing and sharing</title>
+  <style type="text/css">
+    body {
+      text-align: center;
+    }
+    #videocontainer {
+      margin: 42px auto;
+      max-width: 1000px;
+    }
+    #videocontainer > div {
+      position: relative;
+      padding: 30px 0 56.25%;
+      height: 0;
+      overflow: hidden;
+    }
+    iframe, object, embed {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        margin: 0 auto;
+    }
+    footer, a, a:visited {
+      font-family: sans-serif;
+      color: #bbb;
+    }
+  </style>
+</head>
+<body>
+  
+  <div id="videocontainer">
+    <div>
+      <iframe id="iframe" src="" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+    </div>
+  <div>
+  <footer>
+    <small>created by <a href="https://twitter.com/besublime">@BeSublime</a> | fork me on <a href="https://github.com/BeSublime/denoise.me">github</a></small>
+  </footer>
+  <script src="js/lib/sprintf.min.js"></script>
+  <script>
+    (function() {
+      if (true) {
+        var queryString = {},
+            iframe = document.getElementById('iframe'),
+            vimeoUrl = 'http://player.vimeo.com/video/%1$s',
+            youtubeUrl = 'http://www.youtube.com/embed/%1$s',
+            hash = '#',
+            src, vid, host;  // don't knock my variable names, you're smart enough to figure out the difference
+
+        // convert the query string to an object
+        window.location.search.replace(/([^?=&]+)(=([^&\?]*))?/g, function ($0, $1, $2, $3) {
+          queryString[$1] = $3;
+        });
+
+        if (typeof queryString.u === 'undefined')
+          queryString.u = 'http://vimeo.com/1084537';
+
+        queryString.u.replace(/([a-z]+)\.com/g, function($0, $1, $2, $3) {
+          host = $1;
+        });
+
+        if (!host) // host not found, set to default
+          host = 'vimeo';
+
+        var getVid = function(regex, index) {
+          var id = queryString.u.match(regex);
+          if (id && id.length > index - 1)
+            return id[index];
+          else
+            return null;
+        }
+
+        switch(host) {
+          case 'vimeo':
+            src = vimeoUrl;
+            if (!(vid = queryString.v))
+              vid = getVid(/(\w+\/)([^video\/&#\?]+)/, 2);
+
+            vid = vid || '1084537'; // TODO: still need this?
+            break;
+          case 'youtube':
+            src = youtubeUrl;
+            if (!(vid = queryString.v))
+              vid = getVid(/(v=|embed\/)([^&#\?]+)/, 2);
+
+            // reformat the time query string if present (from &t=XXmXXs to &start=XXs)
+            if (typeof queryString.t !== 'undefined') {
+              var time = queryString.t.match(/\d+|\w/g);
+              var seconds = 0;
+              for (var i=0; i<time.length; i++) { // TODO: only need to loop over the even indexes
+                if (time[i+1] === 'm')
+                  seconds += time[i] * 60;
+                else if (time[i+1] === 's')
+                  seconds += parseInt(time[i]);
+              }
+              if (seconds > 0)
+                queryString.start = seconds;
+            }
+
+            vid = vid || 'YE7VzlLtp-4';
+            break;
+          default:
+            // unsupported host
+            break;
+        }
+
+        // append additional query string parameters
+        var i = 0;
+        for (var p in queryString) {
+          if (!p.match(/^[vut]$/)) {
+            src = i == 0 ? src + "?" : src + "&";
+            src = src + sprintf("%1$s=%2$s", p, queryString[p]);
+            i++;
+          }
+        }
+
+        // PUSH the little red button
+        src = sprintf(src, vid);
+        if (hash.length > 1)
+          src += hash;
+        iframe.src = src;
+      }
+    })();
+  </script>
+</body>
+</html>

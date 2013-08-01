@@ -49,7 +49,7 @@
   <footer>
     <small>created by <a href="https://twitter.com/besublime">@BeSublime</a> | fork me on <a href="https://github.com/BeSublime/denoise.me">github</a></small>
     <small id="bookmarklet">have some extra room in your bookmarks bar? drag this up there for easy access: 
-      <a href="javascript:(function()%7Bvar%20d=document,w=window,enc=encodeURIComponent,f='file:///C:/Users/wrightc/Google%20Drive/Projects/denoise.me/index.html',l=d.location,p='?u='+enc(l.href),u=f+p;try%7Bthrow('Uh%20oh!%20Something%20broke');%7Dcatch(z)%7Ba=function()%7Bif(!w.open(u))l.href=u;%7D;if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else%20a();%7Dvoid(0);%7D)()" class="bookmarklet" onclick="alert('Drag me to your toolbar first, then click me when you find a video you\'d like to denoise!');return false;">
+      <a href="javascript:(function()%7Bvar%20d=document,w=window,l=w.location,enc=encodeURIComponent,f='http://denoise.me/',p='?u='+enc(l.href),u=f+p;try%7Bthrow('Uh%20oh!%20Something%20broke.');%7Dcatch(z)%7Ba=function()%7Bif(!w.open(u))l.href=u;%7D;if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else%20a();%7Dvoid(0);%7D)()" class="bookmarklet" onclick="alert('Drag me to your toolbar first, then click me when you find a video you\'d like to denoise!');return false;">
         denoise.me
       </a>
     </small>

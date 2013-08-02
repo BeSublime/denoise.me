@@ -11,11 +11,12 @@
       text-align: center;
     }
     #videocontainer {
-      margin: 42px auto;
-      max-width: 1000px;
+      margin: 20px auto 42px;
+      max-width: 1020px;
     }
     #videocontainer > div {
       position: relative;
+      margin: 0 10px;
       padding: 30px 0 56.25%;
       height: 0;
       overflow: hidden;
@@ -39,23 +40,30 @@
       margin: 0 0 5px;
       position: relative;
     }
+    footer > div:first-child {
+      display: inline-block;
+    }
     #social {
-      height: 0;
+      max-height: 0;
       overflow: hidden;
       position: absolute;
-      right: 0;
+      right: -45%;
       top: 0;
-      box-shadow: 0 0 5px rgba(0,0,0,0.5);
-      -webkit-transition: height 300ms ease;
-      -moz-transition: height 300ms ease;
-      -ms-transition: height 300ms ease;
-      -o-transition: height 300ms ease;
-      transition: height 300ms ease;
+      background-color: #fff;
+      z-index: 1;
+      overflow: hidden;
+      box-shadow: 0 0 5px rgba(0,0,0,0.4);
+      -webkit-transition: max-height 300ms ease;
+      -moz-transition: max-height 300ms ease;
+      -ms-transition: max-height 300ms ease;
+      -o-transition: max-height 300ms ease;
+      transition: max-height 300ms ease;
     }
     #social.toggled {
-      height: auto;
+      max-height: 50px;
     }
-    #social iframe #social div {
+    #social iframe, #social div {
+      float: left;
       padding: 10px;
     }
     @media(max-width: 568px) {
@@ -80,7 +88,7 @@
       <div id="social">
         <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://denoise.me" data-via="denoiseme" data-related="denoiseme">Tweet</a>
         <div class="fb-like" data-href="http://denoise.me" data-width="50" data-layout="button_count" data-show-faces="false" data-send="false"></div>
-        <iframe src="http://ghbtns.com/github-btn.html?user=BeSublime&repo=denoise.me&type=follow&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="62" height="20"></iframe>
+        <!--<iframe src="http://ghbtns.com/github-btn.html?user=BeSublime&repo=denoise.me&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="82" height="20"></iframe>-->
       </div>
     </div>
     <div id="bookmarklet">have some extra room in your bookmarks bar? drag this up there for easy access: 

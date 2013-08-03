@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>denoise.me &middot; distraction-free media viewing and sharing</title>
+  <title>denoise.me &bull; distraction-free media viewing and sharing</title>
   <meta name="description" content="Clutter-free video sharing.">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style type="text/css">
@@ -35,40 +35,54 @@
       font-family: sans-serif;
       color: #bbb;
     }
+    .bookmarklet {
+      text-decoration: none;
+      padding: 2px 5px 3px;
+      background: #f5f5f5;
+      border-radius: 5px;
+    }
     footer > div {
       font-size: smaller;
       margin: 0 0 5px;
       position: relative;
     }
-    footer > div:first-child {
-      display: inline-block;
+    footer > div > span { 
+      padding-left: 2px;
+    }
+    footer > div > span:before {
+      content: '\2022';
+      padding-right: 6px;
+      color: #ccc;
+    }
+    footer > div > span:first-child:before {
+      content: '';
     }
     #social {
-      max-height: 0;
-      overflow: hidden;
-      position: absolute;
-      right: -67%;
-      top: 0;
-      background-color: #fff;
-      z-index: 1;
-      overflow: hidden;
-      box-shadow: 0 0 5px rgba(0,0,0,0.4);
-      -webkit-transition: max-height 300ms ease;
-      -moz-transition: max-height 300ms ease;
-      -ms-transition: max-height 300ms ease;
-      -o-transition: max-height 300ms ease;
-      transition: max-height 300ms ease;
+      margin-top: 8px;
+      opacity: 0;
+      -webkit-transition: opacity 300ms ease;
+      -moz-transition: opacity 300ms ease;
+      -ms-transition: opacity 300ms ease;
+      -o-transition: opacity 300ms ease;
+      transition: opacity 300ms ease;
     }
-    #social.toggled {
-      max-height: 50px;
+    #social.visible {
+      opacity: .75;
     }
     #social > iframe, #social > div {
-      float: left;
-      padding: 10px;
+      padding: 0 10px;
     }
+    iframe html body #widget { text-align: right !important; }
     @media(max-width: 568px) {
       #bookmarklet {
         display: none;
+      }
+    }
+    @media(max-width: 400px) {
+      footer > div > span:before {
+        content: '';
+        padding-right: 0;
+        display: block;
       }
     }
   </style>
@@ -81,20 +95,20 @@
     </div>
   </div>
   <footer>
-    <div>
-      created by <a href="https://twitter.com/besublime">@BeSublime</a> | 
-      fork me on <a href="https://github.com/BeSublime/denoise.me">github</a> | 
-      feeling <a id="social-toggle" href="#" data-toggle="social">social</a>?
-      <div id="social">
-        <div class="fb-like" data-href="http://denoise.me" data-width="50" data-layout="button_count" data-show-faces="false" data-send="false"></div>
-        <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://denoise.me" data-via="denoiseme" data-related="denoiseme">Tweet</a>
-        <!--<iframe src="http://ghbtns.com/github-btn.html?user=BeSublime&repo=denoise.me&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="82" height="20"></iframe>-->
-      </div>
-    </div>
     <div id="bookmarklet">have some extra room in your bookmarks bar? drag this up there for easy access: 
       <a href="javascript:(function()%7Bvar%20d=document,w=window,l=w.location,enc=encodeURIComponent,f='http://denoise.me/',p='?u='+enc(l.href),u=f+p;try%7Bthrow('Uh%20oh!%20Something%20broke.');%7Dcatch(z)%7Ba=function()%7Bif(!w.open(u))l.href=u;%7D;if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else%20a();%7Dvoid(0);%7D)()" class="bookmarklet" onclick="alert('Drag me to your toolbar first, then click me when you find a video you\'d like to denoise!');return false;">
         denoise.me
       </a>
+    </div>
+    <div>
+      <span>created by <a href="https://twitter.com/besublime">@BeSublime</a></span>
+      <span>fork me on <a href="https://github.com/BeSublime/denoise.me">github</a></span>
+      <span>feeling <a id="social-toggle" href="#" data-toggle="social">social</a>?</span>
+    </div>
+    <div id="social">
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://denoise.me" data-via="denoiseme" data-related="denoiseme">Tweet</a>
+      <div class="fb-like" data-href="http://denoise.me" data-width="50" data-layout="button_count" data-show-faces="false" data-send="false"></div>
+      <!--<iframe src="http://ghbtns.com/github-btn.html?user=BeSublime&repo=denoise.me&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="82" height="20"></iframe>-->
     </div>
   </footer>
 
@@ -187,7 +201,11 @@
       $('#social-toggle').on('click', function(e) {
         e.preventDefault();
         var toggleSelector = $(e.target).data('toggle');
-        $('#'+toggleSelector).toggleClass('toggled');
+        $('#'+toggleSelector).toggleClass('visible');
+        if ($('#'+toggleSelector).is('.visible'))
+          window.scrollTo(0,500);
+        else
+          window.scrollTo(0,0);
       });
     })();
   </script>
@@ -207,7 +225,7 @@
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) return;
     js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=401769739883681";
+    js.src = "http://connect.facebook.net/en_US/all.js#xfbml=1";
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));</script>
 </body>

@@ -122,6 +122,7 @@
           iframe = document.getElementById('iframe'),
           vimeoUrl = 'http://player.vimeo.com/video/',
           youtubeUrl = 'http://www.youtube.com/embed/',
+	  youtubeParams = { 'autohide': 1 },
           hash = '#',
           src, vid, host;  // don't knock my variable names, you're smart enough to figure out the difference
 
@@ -174,6 +175,9 @@
             if (seconds > 0)
               queryString.start = seconds;
           }
+
+	  // add default parameters
+	  $.extend(queryString, youtubeParams);
 
           vid = vid || 'YE7VzlLtp-4';
           break;
